@@ -1,0 +1,16 @@
+{
+  "fields": [
+    {
+      "id": "input_fastqs",
+      "label": "Folder with FASTQ files",
+      "type": "data",
+      "dataFilter": {
+        "dataType": "directory",
+        "dataFormat": ["TXT"]
+      },
+      "helpText": "Folder with FASTQ files adhering to Illumina notation",
+      "maxValues": 1,
+      "minValues": 1
+    }
+  ]
+}
