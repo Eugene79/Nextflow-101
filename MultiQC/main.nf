@@ -1,8 +1,5 @@
 nextflow.enable.dsl = 2
 
-// Define input parameters
-params.reads = "${params.input_fastqs}/*{_R1_,_R2_}*.fastq.gz"
-
 // Define container directives
 process FASTQC {
     container 'quay.io/biocontainers/fastqc:0.11.9--0'

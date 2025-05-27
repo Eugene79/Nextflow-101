@@ -1,0 +1,9 @@
+# Ignore Nextflow log files
+.nextflow.log
+.nextflow.log.[0-9]*
+
+# Ignore Nextflow hidden folders
+.nextflow
+
+# Ignore Nextflow work folders
+work/
