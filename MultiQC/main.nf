@@ -16,44 +16,6 @@ process FASTQC {
     """
 }
 
-process FASTP {
-
-    container 'biocontainers/fastp:v0.20.1_cv1'
-    
-    input:
-    tuple val(name), path(reads)
-
-    output:
-    tuple val(name), path("*_trimmed.fastq.gz"), emit: trimmed_reads
-    path "*.json", emit: fastp_json
-    path "*.html", emit: fastp_html
-
-    script:
-    """
-    fastp -i ${reads[0]} -I ${reads[1]} \
-        -o ${name}_R1_trimmed.fastq.gz -O ${name}_R2_trimmed.fastq.gz \
-        -j ${name}_fastp.json -h ${name}_fastp.html
-    """
-}
-
-process MULTIQC {
-    container 'quay.io/biocontainers/multiqc:1.13--pyhdfd78af_0'
-    
-    publishDir 'out', mode: 'copy'
-
-    input:
-    path '*'
-
-    output:
-    path "multiqc_report.html", emit: report, optional: true
-    path "multiqc_data", optional: true
-
-    script:
-    """
-    multiqc .
-    """
-}
-
 // Define the main workflow
 workflow {
     // Create a channel for input reads
@@ -64,18 +26,4 @@ workflow {
     // Run FastQC on raw reads
     fastqc_results = FASTQC(read_pairs_ch)
 
-    // Run FastP for trimming
-    fastp_results = FASTP(read_pairs_ch)
-
-    // Collect all QC reports
-    multiqc_files = fastqc_results.fastqc_results
-        .mix(fastp_results.fastp_json)
-        .mix(fastp_results.fastp_html)
-        .collect()
-
-    multiqc_files.view()    
-
-    // Run MultiQC
-    MULTIQC(multiqc_files)
-    
 }
