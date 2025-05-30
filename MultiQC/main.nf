@@ -36,6 +36,26 @@ process FASTP {
     """
 }
 
+// MultiQC process
+process MULTIQC {
+    container 'quay.io/biocontainers/multiqc:1.13--pyhdfd78af_0'
+
+    publishDir 'out', mode: 'copy'
+    
+    input:
+    path '*'
+
+    output:
+    path "multiqc_report.html", emit: report, optional: true
+    path "multiqc_data", optional: true
+
+    script:
+    """
+    multiqc .
+    """
+}
+
+
 // Define the main workflow
 workflow {
     // Create a channel for input reads
@@ -48,4 +68,16 @@ workflow {
 
     // Run FASTP on raw reads for filtering and trimming
     fastp_results = FASTP(read_pairs_ch)
+
+    // Collect all QC reports
+    multiqc_files = fastqc_results.fastqc_results
+        .mix(fastp_results.fastp_json)
+        .mix(fastp_results.fastp_html)
+        .collect()
+
+    multiqc_files.view()
+
+    // Run MultiQC
+    MULTIQC(multiqc_files)
+
 }
