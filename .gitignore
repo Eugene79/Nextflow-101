@@ -7,3 +7,5 @@
 
 # Ignore Nextflow work folders
 work/
+
+.DS_Store
