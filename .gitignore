@@ -4,6 +4,7 @@
 
 # Ignore Nextflow hidden folders
 .nextflow
+.DS_Store
 
 # Ignore Nextflow work folders
 work/
