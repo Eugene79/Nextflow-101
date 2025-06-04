@@ -20,7 +20,7 @@ process FASTQC {
 
 // Create FASTP process
 process FASTP {
-    container 'biocontainers/fastp:v0.20.1_cv1'
+    container 'quay.io/biocontainers/fastp:v0.20.1_cv1'
     
     input:
     tuple val(name), path(reads)
