@@ -1,3 +1,4 @@
+
 # Nextflow 101 Training Repository
 
 ## Purpose
@@ -9,6 +10,7 @@ By following the script versions in this repo, trainees can:
 * Learn the basics of Nextflow DSL2
 * Understand input/output channels and process definitions
 * Run and modify example pipelines locally or on a cloud platform
+* Progress at their own pace by either writing code from scratch (starting at the `start` tag) or jumping to a later tag to see a completed solution
 
 ## Using Git Tags for Navigation
 
@@ -18,11 +20,12 @@ To help learners follow along during and after the training, **Git tags** have b
 
 A Git tag is a label that points to a specific commit in the Git history. Tags are often used to mark release points or important stages of a project.
 
-In this training repo, we use tags to mark:
+In this training repo, we use tags to mark key milestones in pipeline development:
 
-* `start` — the initial scaffold with minimal Nextflow configuration
-* `local_demo_done` — pipeline ready to be run locally
-* `cloud_demo_done` — final version ready for cloud execution
+* `start` — the initial scaffold with minimal Nextflow configuration (recommended starting point for writing code yourself)
+* `fastqc_only` — pipeline with FastQC analysis implemented
+* `fastp_and_fastqc` — pipeline with both FastQC and fastp steps
+* `multiqc` — final version with MultiQC report generation
 
 ### How to list available tags
 
@@ -33,13 +36,19 @@ git tag
 ### How to checkout a specific tag (in detached HEAD mode)
 
 ```bash
-git checkout tags/local_demo_done
+git checkout tags/<tag_name>
 ```
 
-Alternatively, to explore without leaving your current branch:
+For example, to jump to the FastQC-only solution:
 
 ```bash
-git show local_demo_done
+git checkout tags/fastqc_only
+```
+
+Alternatively, to view the code at a tag without leaving your branch:
+
+```bash
+git show <tag_name>
 ```
 
 ### How to compare versions using `git diff`
@@ -47,10 +56,12 @@ git show local_demo_done
 To see what changed between two versions:
 
 ```bash
-git diff start local_demo_done
+git diff start fastqc_only
+git diff fastqc_only fastp_and_fastqc
+git diff fastp_and_fastqc multiqc
 ```
 
-This will highlight what was added, removed, or modified between the two stages.
+This will highlight what was added, removed, or modified between the stages.
 
 ## Additional Tips for Beginners
 
@@ -63,7 +74,7 @@ This will highlight what was added, removed, or modified between the two stages.
 * **Clone the repo with history**: Make sure to clone with full history (not shallow) so tags are available:
 
   ```bash
-  git clone https://github.com/your-org/nextflow-101.git
+  git clone <repo-url>
   cd nextflow-101
   ```
 
@@ -79,7 +90,8 @@ This will highlight what was added, removed, or modified between the two stages.
 ## Getting Started
 
 1. Install [Nextflow](https://www.nextflow.io/)
-2. Checkout the `start` tag and follow the guided steps in `main.nf`
-3. Progress through tags as the training evolves
+2. Checkout the `start` tag and follow the guided steps in `main.nf` to write the code yourself, **or**
+3. Jump to any later tag (`fastqc_only`, `fastp_and_fastqc`, `multiqc`) to see a completed solution for that stage
+4. Use `git diff` to compare your work with the provided solutions
 
 We hope this structure helps you learn Nextflow more effectively. Happy scripting!
