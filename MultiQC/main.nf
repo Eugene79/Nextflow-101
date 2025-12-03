@@ -1,11 +1,6 @@
 // Pipeline parameters (example)
 params.input_file = "input.txt"
 
-// Channels (example)
-channel {
-  fromFile(params.input_file)
-}
-
 // Processes (example)
 process STEP1 {
   input:
@@ -22,6 +17,8 @@ process STEP1 {
 
 // Workflow (example)
 workflow {
+  //create an input channel
+  ch_input = channel.fromPath(params.input_file)  
   // Connect the input channel to the process
   STEP1( ch_input )
 }
